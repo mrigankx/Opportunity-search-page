@@ -1,0 +1,94 @@
+<template>
+    <lightning-card title="Opportunity Search" icon-name="standard:account">
+        <div if:true={errorMsg} style="margin-left: 3%;">
+            <p style="color: red;">{errorMsg}</p>
+        </div>
+
+
+        <lightning-layout multiple-rows="true" vertical-align="end">
+            <lightning-layout-item size="12" small-device-size="10" medium-device-size="8" large-device-size="6"
+                padding="around-small">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning-input label="Search" value={strSearchOppName} onchange={handleOppName}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="2" medium-device-size="2" large-device-size="2"
+                padding="around-small">
+                <lightning-button label="Search" variant="brand" onclick={handleSearch}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={data.length}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Name">Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Account Name">Account Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Stage">Stage</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Type">Type</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Amount">Amount</div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <template for:each={data} for:item="opps">
+                        <tr class="slds-hint-parent" key={opps.Id}>
+                            <td>
+                                <div class="slds-truncate">
+                                    <lightning-button style="border-collapse: collapse" label={opps.Name}
+                                        value={opps.Id} onclick={handleOpenOpps}>
+                                    </lightning-button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">
+                                    <lightning-button label={opps.Account.Name} value={opps.Account.Id}
+                                        onclick={handleOpenAccs}>
+                                    </lightning-button>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{opps.StageName}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{opps.Type}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">
+                                    <lightning-formatted-number value={opps.Amount} format-style="currency"
+                                        currency-code="USD"></lightning-formatted-number>
+
+                                </div>
+                            </td>
+                            <td>
+                                <lightning-button label="Send" data-id={opps.Id} variant="brand" onclick={sendRecord}>
+                                </lightning-button>
+                            </td>
+
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="slds-m-around_medium">
+                <p class="slds-m-vertical_medium content">
+                    Displaying {startingRecord} to {endingRecord} of {totalRecountCount} records.
+                    Page {page} of {totalPage}. </p>
+                <c-paginator onprevious={previousHandler} onnext={nextHandler}></c-paginator>
+            </div>
+        </template>
+    </lightning-card>
+
+</template>

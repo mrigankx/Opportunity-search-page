@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/opportunitySearch": [
+                "opportunitySearch/opportunitySearch.js"
+            ],
+            "c/walletPage": [
+                "walletPage/walletPage.js"
+            ],
+            "c/paginator": [
+                "paginator/paginator.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}

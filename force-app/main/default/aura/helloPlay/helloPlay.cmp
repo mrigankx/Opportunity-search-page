@@ -1,0 +1,23 @@
+<aura:component >
+	<aura:attribute name="messages" type="List"
+                    default="['you look nice today', 'ooo yeah', 'ooooh fuckkk']"/>  
+	<h1>Hello Playground</h1>
+<h2>List Items:</h2>
+    <p><c:helloWorld message="{!v.messages[0]}"/></p>
+    <p><c:helloWorld message="{!v.messages[1]}"/></p>
+    <p><c:helloWorld message="{!v.messages[2]}"/></p>
+<h2>list iteration</h2>
+    <aura:iteration items="{!v.messages}" var = "msg">
+        <p><c:helloWorld message="{!msg}"/> </p>
+    </aura:iteration>
+    <br/><br/>
+    <h2>Conditional and Global VP</h2>
+    <aura:if isTrue="{!$Browser.isPhone}">
+    <p><c:helloWorld message="its a phone"/></p>
+   
+   <aura:set attribute="else">
+    <p><c:helloWorld message="its a tab or laptop"/></p>
+    
+    </aura:set>
+    </aura:if>
+</aura:component>

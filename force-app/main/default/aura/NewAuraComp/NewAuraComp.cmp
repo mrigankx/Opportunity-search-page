@@ -1,0 +1,12 @@
+<aura:component>
+    <aura:attribute name="Opportunity" type="Opportunity" />
+    <aura:registerEvent name="updateAccount" type="c:accountItemUpdate" />
+    <lightning:card title="{!v.account.Name}">
+        <p class="slds-text-heading-medium slds-p-horizontal--small">
+            Annual Revenue:
+            <lightning:formattedNumber value="{!v.account.AnnualRevenue}" style="currency" />
+        </p>
+        <lightning:input type="button" label="Update" name="update" class="slds-p-around--small"
+            onclick="{!c.clickUpdate}" />
+    </lightning:card>
+</aura:component>

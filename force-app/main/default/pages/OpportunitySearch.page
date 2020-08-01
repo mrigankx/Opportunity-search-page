@@ -1,0 +1,51 @@
+<apex:page controller="Ctrl_OppoSearch" sidebar="true" showHeader="true">
+    <style>
+        .fontSize {
+            font-size: 16px;
+        }
+    </style>
+    <apex:pageMessages />
+    <apex:form style="margin-left: 10px;">
+        <h1 style="color:blue; padding-left: 500px; font-size: 17px;">Opportunity Search Page</h1>
+        <hr/> Search:
+        <apex:inputText value="{!searchName}" />
+        <apex:commandButton value="Search" action="{!search}" />
+        <br/>
+        <apex:pageBlock title="Output Data" id="pb" rendered="{!outputData}">
+            <apex:pageblockTable value="{!Opps}" var="opp">
+                <apex:column headerValue="Opportunity Name">
+                    <apex:outputLink value="/lightning/r/Opportunity/{!opp.id}/view" target="_blank">{!opp.Name}</apex:outputLink>
+                </apex:column>
+                <apex:column headerValue="Account Name">
+                    <apex:outputlink target="_blank" value="/lightning/r/Account/{!opp.accountid}/view">{!opp.Account.Name}</apex:outputlink>
+                </apex:column>
+                <apex:column value="{!opp.stagename}" headerValue="Stage" />
+                <apex:column value="{!opp.type}" headerValue="Type" />
+                <apex:column value="{!opp.amount}" headerValue="Amount" />
+                <apex:column>
+                    <div style="font-size: 14px;">
+                        <apex:commandButton value="Send" onclick="SupressLetter('{!opp.Id}');return false;">
+                        </apex:commandButton>
+                    </div>
+                </apex:column>
+            </apex:pageblockTable>
+
+            <apex:actionFunction name="SupressLetter" action="{!sendRecord}" rerender="pb">
+                <apex:param name="firstparam" assignto="{!selectedId}" value="" />
+            </apex:actionFunction>
+            <apex:panelGrid columns="10">
+                <apex:commandButton value="First" action="{!setCon.first}" disabled="{!!setCon.hasPrevious}" title="First Page" />
+                <apex:commandButton value="Previous" action="{!setCon.previous}" disabled="{!!setCon.hasPrevious}" title="Previous Page"
+                />
+                <apex:commandButton value="Next" action="{!setCon.next}" disabled="{!!setCon.hasNext}" title="Next Page" />
+                <apex:commandButton value="Last" action="{!setCon.last}" disabled="{!!setCon.hasNext}" title="Last Page" />
+                <apex:outputText>{!(setCon.pageNumber * 20)+1-20}-{!IF((setCon.pageNumber * 20)>noOfRecords, noOfRecords, (setCon.pageNumber
+                    * 20))} of {!noOfRecords}
+                </apex:outputText>
+                <apex:outputPanel>
+                </apex:outputPanel>
+            </apex:panelGrid>
+            <apex:outputText value="{!sendMessage}" />
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
